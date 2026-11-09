@@ -1,7 +1,7 @@
 <resources>
     <!-- Notification Channels -->
     <string name="channel_vpn_name">VPN 服务状态</string>
-    <string name="channel_vpn_desc">Mishka 代理服务运行状态</string>
+    <string name="channel_vpn_desc">mihane 代理服务运行状态</string>
     <string name="channel_profile_status_name">配置更新进度</string>
     <string name="channel_profile_status_desc">配置下载和验证进度</string>
     <string name="channel_profile_result_name">配置更新结果</string>
@@ -13,7 +13,7 @@
 
     <!-- VPN Notifications -->
     <string name="notification_loading">正在启动…</string>
-    <string name="notification_running_title">Mishka 运行中</string>
+    <string name="notification_running_title">mihane 运行中</string>
     <string name="notification_running_content">模式: %1$s</string>
     <string name="notification_wifi_policy_title">Wi-Fi 自动切换</string>
     <string name="notification_wifi_policy_service_content">等待 Wi-Fi 变化</string>
@@ -57,7 +57,7 @@
     <!-- Service Errors -->
     <string name="error_vpn_failed">VPN 建立失败: %1$s</string>
     <string name="error_vpn_denied">VPN 权限被拒绝</string>
-    <string name="error_vpn_no_selected_apps">请至少选择一个已安装且不是 Mishka 的应用，再启动 VPN</string>
+    <string name="error_vpn_no_selected_apps">请至少选择一个已安装且不是 mihane 的应用，再启动 VPN</string>
     <string name="error_vpn_not_ready">VPN 启动未完成，或控制 API 不可用</string>
     <string name="error_start_failed">启动失败</string>
     <string name="error_root_failed">无法获取 Root 权限</string>
@@ -330,7 +330,7 @@
     <string name="settings_theme_group_color">颜色与主题</string>
     <string name="settings_theme_group_interface">界面与效果</string>
     <string name="settings_theme_group_navigation">导航</string>
-    <string name="settings_theme_summary">颜色、模糊效果与界面缩放，导航与手势选项</string>
+    <string name="settings_theme_summary">动态取色、种子色、深色主题与界面缩放</string>
     <string name="settings_theme_mode">主题模式</string>
     <string name="settings_theme_system">跟随系统</string>
     <string name="settings_theme_light">浅色</string>
@@ -345,7 +345,7 @@
     <string name="settings_theme_blur_style_gaussian_summary">顶栏整体均匀模糊</string>
     <string name="settings_theme_blur_style_progressive_summary">顶部渐强模糊</string>
     <string name="settings_theme_density_scale">界面缩放</string>
-    <string name="settings_theme_density_scale_summary">调整全局显示比例（80% - 110%）</string>
+    <string name="settings_theme_density_scale_summary" formatted="false">调整全局显示比例（80% - 110%）</string>
     <string name="settings_theme_floating_bottom_bar">悬浮底栏</string>
     <string name="settings_theme_floating_bottom_bar_summary">在手机布局中使用悬浮底部导航栏</string>
     <string name="settings_theme_floating_bottom_bar_style">悬浮底栏样式</string>
@@ -370,8 +370,8 @@
     <string name="settings_theme_palette_content">内容（Content）</string>
     <string name="settings_theme_pure_black">纯黑背景</string>
     <string name="settings_theme_pure_black_summary">深色模式下使用纯黑背景</string>
-    <string name="settings_theme_accent_title">强调色</string>
-    <string name="settings_theme_accent_default">系统取色</string>
+    <string name="settings_theme_accent_title">种子色</string>
+    <string name="settings_theme_accent_default">默认</string>
     <string name="settings_theme_accent_blue">蓝色</string>
     <string name="settings_theme_accent_purple">紫色</string>
     <string name="settings_theme_accent_pink">粉色</string>
@@ -631,4 +631,9 @@
         <item quantity="other">已选择 %1$d 项覆写</item>
     </plurals>
     <string name="subscription_overrides">覆写</string>
+    <string name="about_font_resources">字体资源</string>
+    <string name="home_uptime_label">已运行 %1$s</string>
+    <string name="home_latency_testing">测试中</string>
+    <string name="home_latency_slow">较慢</string>
+    <string name="home_latency_high">高延迟</string>
 </resources>

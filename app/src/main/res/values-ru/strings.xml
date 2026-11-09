@@ -1,7 +1,7 @@
 <resources>
     <!-- Notification Channels -->
     <string name="channel_vpn_name">Состояние службы VPN</string>
-    <string name="channel_vpn_desc">Состояние работы службы прокси Mishka</string>
+    <string name="channel_vpn_desc">Состояние работы службы прокси mihane</string>
     <string name="channel_profile_status_name">Прогресс обновления конфигурации</string>
     <string name="channel_profile_status_desc">Прогресс загрузки и проверки конфигурации</string>
     <string name="channel_profile_result_name">Результат обновления конфигурации</string>
@@ -13,7 +13,7 @@
 
     <!-- VPN Notifications -->
     <string name="notification_loading">Запуск…</string>
-    <string name="notification_running_title">Mishka работает</string>
+    <string name="notification_running_title">mihane работает</string>
     <string name="notification_running_content">Режим: %1$s</string>
     <string name="notification_wifi_policy_title">Автопереключение Wi-Fi</string>
     <string name="notification_wifi_policy_service_content">Ожидание изменений Wi-Fi</string>
@@ -330,7 +330,7 @@
     <string name="settings_theme_group_color">Цвет и тема</string>
     <string name="settings_theme_group_interface">Интерфейс и эффекты</string>
     <string name="settings_theme_group_navigation">Навигация</string>
-    <string name="settings_theme_summary">Цвет, размытие и масштаб интерфейса; настройки навигации и жестов</string>
+    <string name="settings_theme_summary">Динамические цвета, исходный цвет, тёмная тема и масштаб интерфейса</string>
     <string name="settings_theme_mode">Тема оформления</string>
     <string name="settings_theme_system">Системная</string>
     <string name="settings_theme_light">Светлая</string>
@@ -345,7 +345,7 @@
     <string name="settings_theme_blur_style_gaussian_summary">Равномерное матовое размытие по всей верхней панели</string>
     <string name="settings_theme_blur_style_progressive_summary">Градиентное размытие с усилением к верхнему краю</string>
     <string name="settings_theme_density_scale">Масштаб интерфейса</string>
-    <string name="settings_theme_density_scale_summary">Настройка общего масштаба отображения (80% – 110%)</string>
+    <string name="settings_theme_density_scale_summary" formatted="false">Настройка общего масштаба отображения (80% – 110%)</string>
     <string name="settings_theme_floating_bottom_bar">Плавающая нижняя панель</string>
     <string name="settings_theme_floating_bottom_bar_summary">Использовать парящую нижнюю панель на смартфонах</string>
     <string name="settings_theme_floating_bottom_bar_style">Стиль плавающей нижней панели</string>
@@ -370,8 +370,8 @@
     <string name="settings_theme_palette_content">Контентная (Content)</string>
     <string name="settings_theme_pure_black">Чисто черный фон</string>
     <string name="settings_theme_pure_black_summary">Использовать абсолютно черный фон (AMOLED) в темной теме</string>
-    <string name="settings_theme_accent_title">Акцентный цвет</string>
-    <string name="settings_theme_accent_default">Системный цвет</string>
+    <string name="settings_theme_accent_title">Исходный цвет</string>
+    <string name="settings_theme_accent_default">По умолчанию</string>
     <string name="settings_theme_accent_blue">Синий</string>
     <string name="settings_theme_accent_purple">Фиолетовый</string>
     <string name="settings_theme_accent_pink">Розовый</string>
@@ -634,4 +634,11 @@
         <item quantity="other">Выбрано %1$d переопределения</item>
     </plurals>
     <string name="subscription_overrides">Переопределения</string>
+    <string name="about_font_resources">Шрифты</string>
+    <string name="error_vpn_no_selected_apps">Перед запуском VPN выберите хотя бы одно установленное приложение, кроме mihane.</string>
+    <string name="error_vpn_not_ready">Запуск VPN не завершён или API управления недоступен</string>
+    <string name="home_uptime_label">Время работы %1$s</string>
+    <string name="home_latency_testing">Проверка</string>
+    <string name="home_latency_slow">Медленно</string>
+    <string name="home_latency_high">Высокая задержка</string>
 </resources>

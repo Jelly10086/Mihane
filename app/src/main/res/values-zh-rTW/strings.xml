@@ -1,7 +1,7 @@
 <resources>
     <!-- Notification Channels -->
     <string name="channel_vpn_name">VPN 服務狀態</string>
-    <string name="channel_vpn_desc">Mishka 代理服務執行狀態</string>
+    <string name="channel_vpn_desc">mihane 代理服務執行狀態</string>
     <string name="channel_profile_status_name">設定檔更新進度</string>
     <string name="channel_profile_status_desc">設定檔下載與驗證進度</string>
     <string name="channel_profile_result_name">設定檔更新結果</string>
@@ -13,7 +13,7 @@
 
     <!-- VPN Notifications -->
     <string name="notification_loading">正在啟動…</string>
-    <string name="notification_running_title">Mishka 執行中</string>
+    <string name="notification_running_title">mihane 執行中</string>
     <string name="notification_running_content">模式: %1$s</string>
     <string name="notification_wifi_policy_title">Wi-Fi 自動切換</string>
     <string name="notification_wifi_policy_service_content">等待 Wi-Fi 變化</string>
@@ -57,7 +57,7 @@
     <!-- Service Errors -->
     <string name="error_vpn_failed">VPN 建立失敗: %1$s</string>
     <string name="error_vpn_denied">VPN 權限遭拒</string>
-    <string name="error_vpn_no_selected_apps">請至少選取一個已安裝且不是 Mishka 的應用程式，再啟動 VPN</string>
+    <string name="error_vpn_no_selected_apps">請至少選取一個已安裝且不是 mihane 的應用程式，再啟動 VPN</string>
     <string name="error_vpn_not_ready">VPN 啟動未完成，或控制 API 無法使用</string>
     <string name="error_start_failed">啟動失敗</string>
     <string name="error_root_failed">無法取得 Root 權限</string>
@@ -330,7 +330,7 @@
     <string name="settings_theme_group_color">顏色與主題</string>
     <string name="settings_theme_group_interface">介面與效果</string>
     <string name="settings_theme_group_navigation">導覽</string>
-    <string name="settings_theme_summary">顏色、模糊效果與介面縮放，導覽與手勢選項</string>
+    <string name="settings_theme_summary">動態配色、種子色、深色主題與介面縮放</string>
     <string name="settings_theme_mode">主題模式</string>
     <string name="settings_theme_system">跟隨系統</string>
     <string name="settings_theme_light">淺色</string>
@@ -345,7 +345,7 @@
     <string name="settings_theme_blur_style_gaussian_summary">頂欄整體均勻模糊</string>
     <string name="settings_theme_blur_style_progressive_summary">頂部漸強模糊</string>
     <string name="settings_theme_density_scale">介面縮放</string>
-    <string name="settings_theme_density_scale_summary">調整全域顯示比例（80% - 110%）</string>
+    <string name="settings_theme_density_scale_summary" formatted="false">調整全域顯示比例（80% - 110%）</string>
     <string name="settings_theme_floating_bottom_bar">懸浮底部列</string>
     <string name="settings_theme_floating_bottom_bar_summary">在手機版面中使用懸浮底部導覽列</string>
     <string name="settings_theme_floating_bottom_bar_style">懸浮底部列樣式</string>
@@ -370,8 +370,8 @@
     <string name="settings_theme_palette_content">內容（Content）</string>
     <string name="settings_theme_pure_black">純黑背景</string>
     <string name="settings_theme_pure_black_summary">深色模式下使用純黑背景</string>
-    <string name="settings_theme_accent_title">強調色</string>
-    <string name="settings_theme_accent_default">系統取色</string>
+    <string name="settings_theme_accent_title">種子色</string>
+    <string name="settings_theme_accent_default">預設</string>
     <string name="settings_theme_accent_blue">藍色</string>
     <string name="settings_theme_accent_purple">紫色</string>
     <string name="settings_theme_accent_pink">粉紅色</string>
@@ -631,4 +631,9 @@
         <item quantity="other">已選擇 %1$d 項覆寫</item>
     </plurals>
     <string name="subscription_overrides">覆寫</string>
+    <string name="about_font_resources">字型資源</string>
+    <string name="home_uptime_label">已執行 %1$s</string>
+    <string name="home_latency_testing">測試中</string>
+    <string name="home_latency_slow">較慢</string>
+    <string name="home_latency_high">高延遲</string>
 </resources>
