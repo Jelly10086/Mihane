@@ -1,0 +1,9 @@
+allprojects { project ->
+    project.plugins.withId('com.android.application') {
+        project.extensions.getByName('androidComponents').finalizeDsl { android ->
+            android.ndkVersion = '28.2.13676358'
+            android.buildToolsVersion = '36.0.0'
+            android.externalNativeBuild.cmake.version = '3.22.1'
+        }
+    }
+}
