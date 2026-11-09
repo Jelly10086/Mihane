@@ -1,8 +1,11 @@
+import java.io.File
 import java.net.HttpURLConnection
 import java.net.URI
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
+import java.security.MessageDigest
 import java.util.Properties
+import java.util.zip.ZipFile
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -23,8 +26,13 @@ dependencies {
     implementation(libs.bundles.room)
     implementation(libs.bundles.kotlinx)
     implementation(libs.bundles.ktor)
-    implementation(libs.bundles.miuix)
+    implementation(project(":uwuCompose"))
+    implementation(libs.navigation3.runtime)
+    implementation(libs.navigation3.ui)
+    implementation(libs.material.color.utilities)
+    implementation(libs.compose.ui.tooling.preview)
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.core)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.profileinstaller)
     implementation(libs.material.icons.extended)
@@ -34,21 +42,28 @@ dependencies {
     ksp(libs.androidx.room3.compiler)
 }
 
-room3 {
-    schemaDirectory("$projectDir/schemas")
-}
+room3 { schemaDirectory("$projectDir/schemas") }
+
 val supportedAbis = listOf("arm64-v8a", "armeabi-v7a", "x86_64", "x86")
 val gitVersionCode = getGitVersionCode()
 
 val properties = Properties()
-runCatching { project.rootProject.file("local.properties").inputStream().use { properties.load(it) } }
-val keystorePath: String? = (properties.getProperty("KEYSTORE_PATH") ?: System.getenv("KEYSTORE_PATH"))?.takeIf { it.isNotBlank() }
+
+runCatching {
+    project.rootProject.file("local.properties").inputStream().use { properties.load(it) }
+}
+
+val keystorePath: String? =
+    (properties.getProperty("KEYSTORE_PATH") ?: System.getenv("KEYSTORE_PATH"))?.takeIf {
+        it.isNotBlank()
+    }
 val keystorePwd: String? = properties.getProperty("KEYSTORE_PASS") ?: System.getenv("KEYSTORE_PASS")
 val alias: String? = properties.getProperty("KEY_ALIAS") ?: System.getenv("KEY_ALIAS")
 val pwd: String? = properties.getProperty("KEY_PASSWORD") ?: System.getenv("KEY_PASSWORD")
-val keystoreFile = keystorePath?.let { path ->
-    file(path).takeIf { it.exists() } ?: project.rootProject.file(path).takeIf { it.exists() }
-}
+val keystoreFile =
+    keystorePath?.let { path ->
+        file(path).takeIf { it.exists() } ?: project.rootProject.file(path).takeIf { it.exists() }
+    }
 
 @Suppress("UnstableApiUsage")
 android {
@@ -70,17 +85,14 @@ android {
             vcsInfo.include = false
             if (keystoreFile != null) signingConfig = signingConfigs.getByName("release")
         }
-        debug {
-            if (keystoreFile != null) signingConfig = signingConfigs.getByName("release")
-        }
+        debug { if (keystoreFile != null) signingConfig = signingConfigs.getByName("release") }
     }
-    buildFeatures {
-        buildConfig = true
-    }
+    buildFeatures { buildConfig = true }
     compileSdk {
-        version = release(ProjectConfig.Android.COMPILE_SDK) {
-            minorApiLevel = ProjectConfig.Android.COMPILE_SDK_MINOR
-        }
+        version =
+            release(ProjectConfig.Android.COMPILE_SDK) {
+                minorApiLevel = ProjectConfig.Android.COMPILE_SDK_MINOR
+            }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -97,11 +109,7 @@ android {
         includeInApk = false
         includeInBundle = false
     }
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-        }
-    }
+    externalNativeBuild { cmake { path = file("src/main/cpp/CMakeLists.txt") } }
     namespace = ProjectConfig.PACKAGE_NAME
     packaging {
         jniLibs {
@@ -119,11 +127,7 @@ android {
     }
 }
 
-kotlin {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
-    }
-}
+kotlin { compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21) } }
 
 composeCompiler {
     stabilityConfigurationFiles.add(
@@ -131,9 +135,7 @@ composeCompiler {
     )
 }
 
-baselineProfile {
-    automaticGenerationDuringBuild = false
-}
+baselineProfile { automaticGenerationDuringBuild = false }
 
 androidComponents {
     finalizeDsl { ext ->
@@ -149,11 +151,9 @@ androidComponents {
 }
 
 abstract class DownloadGeoFilesTask : DefaultTask() {
-    @get:Input
-    abstract val sources: MapProperty<String, String>
+    @get:Input abstract val sources: MapProperty<String, String>
 
-    @get:OutputDirectory
-    abstract val outputDir: DirectoryProperty
+    @get:OutputDirectory abstract val outputDir: DirectoryProperty
 
     @TaskAction
     fun download() {
@@ -162,10 +162,11 @@ abstract class DownloadGeoFilesTask : DefaultTask() {
         sources.get().forEach { (downloadUrl, fileName) ->
             val target = File(dir, fileName)
             val partial = File(dir, "$fileName.part")
-            val connection = (URI(downloadUrl).toURL().openConnection() as HttpURLConnection).apply {
-                connectTimeout = HTTP_TIMEOUT_MS
-                readTimeout = HTTP_TIMEOUT_MS
-            }
+            val connection =
+                (URI(downloadUrl).toURL().openConnection() as HttpURLConnection).apply {
+                    connectTimeout = HTTP_TIMEOUT_MS
+                    readTimeout = HTTP_TIMEOUT_MS
+                }
             try {
                 val status = connection.responseCode
                 check(status == HttpURLConnection.HTTP_OK) { "$downloadUrl responded HTTP $status" }
@@ -179,7 +180,9 @@ abstract class DownloadGeoFilesTask : DefaultTask() {
             val size = partial.length()
             if (size < MIN_FILE_BYTES) {
                 partial.delete()
-                error("$fileName is only $size bytes, expected a data file (bad URL or rate limited?)")
+                error(
+                    "$fileName is only $size bytes, expected a data file (bad URL or rate limited?)"
+                )
             }
             Files.move(partial.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING)
             logger.lifecycle("$fileName downloaded to $target ($size bytes)")
@@ -192,24 +195,28 @@ abstract class DownloadGeoFilesTask : DefaultTask() {
     }
 }
 
-val downloadGeoFiles = tasks.register<DownloadGeoFilesTask>("downloadGeoFiles") {
-    description = "Download the prebuilt GeoIP/GeoSite data files into the assets source set"
-    sources.set(
-        mapOf(
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb" to "geoip.metadb",
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat" to "geosite.dat",
-            "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb" to "ASN.mmdb",
+val downloadGeoFiles =
+    tasks.register<DownloadGeoFilesTask>("downloadGeoFiles") {
+        description = "Download the prebuilt GeoIP/GeoSite data files into the assets source set"
+        sources.set(
+            mapOf(
+                "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geoip.metadb" to
+                    "geoip.metadb",
+                "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/geosite.dat" to
+                    "geosite.dat",
+                "https://github.com/MetaCubeX/meta-rules-dat/releases/download/latest/GeoLite2-ASN.mmdb" to
+                    "ASN.mmdb",
+            )
         )
-    )
-    outputDir.set(layout.projectDirectory.dir("src/main/assets"))
-    // 上游 latest tag 原地更新时 URL 不变，强制每次显式调用均重新拉取
-    outputs.upToDateWhen { false }
-}
+        outputDir.set(layout.projectDirectory.dir("src/main/assets"))
+        // 上游 latest tag 原地更新时 URL 不变，强制每次显式调用均重新拉取
+        outputs.upToDateWhen { false }
+    }
 
 // 避免 outputDir 与 mergeAssets 输入重叠导致未声明任务依赖冲突
-tasks.matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }.configureEach {
-    mustRunAfter(downloadGeoFiles)
-}
+tasks
+    .matching { it.name.startsWith("merge") && it.name.endsWith("Assets") }
+    .configureEach { mustRunAfter(downloadGeoFiles) }
 
 val mihomoSubmoduleDir = rootProject.layout.projectDirectory.dir("mihomo")
 val mishkaCoreSourceDir = rootProject.layout.projectDirectory.dir("app/src/main/native/mishka_core")
@@ -219,40 +226,40 @@ val mihomoVersionPath = "github.com/metacubex/mihomo/constant.Version"
 val ndkDirectoryProvider = androidComponents.sdkComponents.ndkDirectory
 
 // 编译 libmihomo.so（JNI + runtime wrapper 共用）
-val buildMihomoTasks = supportedAbis.map { abi ->
-    val suffix = abi.replace("-", "_")
-    tasks.register<GoBuildTask>("buildMihomo_$suffix") {
-        group = "mihomo"
-        description = "Build unified mihomo + JNI c-shared library (libmihomo.so) for $abi"
-        goSourceDir.set(mishkaCoreSourceDir)
-        // 追踪 replace 指向的 submodule 源码；反向过滤以覆盖 go:embed 内嵌资源
-        replacedModuleSources.from(
-            mihomoSubmoduleDir.asFileTree.matching {
-                exclude(".git", ".github/**", "docs/**", "test/**", "**/*_test.go")
-            }
-        )
-        this.abi.set(abi)
-        versionName.set(mihomoVersion)
-        buildTags.set(mihomoBuildTags)
-        cgoEnabled.set(true)
-        buildMode.set(GoBuildTask.BuildMode.CShared)
-        ndkDirectory.set(ndkDirectoryProvider)
-        minSdk.set(ProjectConfig.Android.MIN_SDK)
-        moduleVersionPath.set(mihomoVersionPath)
-        outputFile.set(layout.projectDirectory.file("src/main/jniLibs/$abi/libmihomo.so"))
-        headerFile.set(layout.projectDirectory.file("src/main/jniLibs/$abi/libmihomo.h"))
+val buildMihomoTasks =
+    supportedAbis.map { abi ->
+        val suffix = abi.replace("-", "_")
+        tasks.register<GoBuildTask>("buildMihomo_$suffix") {
+            group = "mihomo"
+            description = "Build unified mihomo + JNI c-shared library (libmihomo.so) for $abi"
+            goSourceDir.set(mishkaCoreSourceDir)
+            // 追踪 replace 指向的 submodule 源码；反向过滤以覆盖 go:embed 内嵌资源
+            replacedModuleSources.from(
+                mihomoSubmoduleDir.asFileTree.matching {
+                    exclude(".git", ".github/**", "docs/**", "test/**", "**/*_test.go")
+                }
+            )
+            this.abi.set(abi)
+            versionName.set(mihomoVersion)
+            buildTags.set(mihomoBuildTags)
+            cgoEnabled.set(true)
+            buildMode.set(GoBuildTask.BuildMode.CShared)
+            ndkDirectory.set(ndkDirectoryProvider)
+            minSdk.set(ProjectConfig.Android.MIN_SDK)
+            moduleVersionPath.set(mihomoVersionPath)
+            outputFile.set(layout.projectDirectory.file("src/main/jniLibs/$abi/libmihomo.so"))
+            headerFile.set(layout.projectDirectory.file("src/main/jniLibs/$abi/libmihomo.h"))
+        }
     }
-}
 
-val buildMihomo = tasks.register("buildMihomo") {
-    group = "mihomo"
-    description = "Build unified mihomo library for all supported ABIs"
-    dependsOn(buildMihomoTasks)
-}
+val buildMihomo =
+    tasks.register("buildMihomo") {
+        group = "mihomo"
+        description = "Build unified mihomo library for all supported ABIs"
+        dependsOn(buildMihomoTasks)
+    }
 
-tasks.named("preBuild") {
-    dependsOn(buildMihomo)
-}
+tasks.named("preBuild") { dependsOn(buildMihomo) }
 
 tasks.configureEach {
     if (name.startsWith("configureCMake") || name.startsWith("buildCMake")) {
@@ -262,13 +269,70 @@ tasks.configureEach {
 
 androidComponents {
     // 剥除 release 冗余打包资源（不影响 services/**）
-    onVariants(selector().withBuildType("release")) {
-        it.packaging.resources.excludes.add("**")
-    }
+    onVariants(selector().withBuildType("release")) { it.packaging.resources.excludes.add("**") }
 }
 
 base {
-    archivesName.set(
-        "${ProjectConfig.APP_NAME}-v${ProjectConfig.VERSION_NAME}($gitVersionCode)",
+    archivesName.set("${ProjectConfig.APP_NAME}-v${ProjectConfig.VERSION_NAME}($gitVersionCode)")
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll(
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3ExpressiveApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+        )
+    }
+}
+
+abstract class PrepareBundledFonts : DefaultTask() {
+    @get:InputFile abstract val miSansArchive: RegularFileProperty
+    @get:InputFile abstract val outfit: RegularFileProperty
+    @get:InputFile abstract val checksum: RegularFileProperty
+    @get:OutputDirectory abstract val outputDirectory: DirectoryProperty
+
+    @TaskAction
+    fun prepare() {
+        val output = outputDirectory.get().dir("font").asFile.apply { mkdirs() }
+        ZipFile(miSansArchive.get().asFile).use { zip ->
+            val entry =
+                zip.entries().asSequence().single {
+                    !it.name.startsWith("__MACOSX/") && it.name.endsWith("MiSansVF.ttf")
+                }
+            val bytes = zip.getInputStream(entry).use { it.readBytes() }
+            val hash =
+                MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") {
+                    "%02x".format(it)
+                }
+            check(hash == checksum.get().asFile.readText().trim()) {
+                "MiSans archive does not match the reviewed official font"
+            }
+            output.resolve("misans_variable.ttf").writeBytes(bytes)
+        }
+        outfit.get().asFile.copyTo(output.resolve("outfit_variable.ttf"), overwrite = true)
+    }
+}
+
+val miSansPath =
+    providers
+        .gradleProperty("fonts.misansArchive")
+        .orElse(providers.environmentVariable("MISANS_ARCHIVE"))
+        .orElse(
+            rootProject.layout.projectDirectory.file("fonts/misans/MiSans.zip").asFile.absolutePath
+        )
+val generateFontResources =
+    tasks.register<PrepareBundledFonts>("prepareBundledFonts") {
+        miSansArchive.set(File(miSansPath.get()))
+        outfit.set(rootProject.layout.projectDirectory.file("fonts/outfit.ttf"))
+        checksum.set(rootProject.layout.projectDirectory.file("fonts/misans.sha256"))
+        outputDirectory.set(layout.buildDirectory.dir("generated/fontResources"))
+    }
+
+androidComponents.onVariants { variant ->
+    variant.sources.res?.addGeneratedSourceDirectory(
+        generateFontResources,
+        PrepareBundledFonts::outputDirectory,
     )
+    variant.sources.assets?.addStaticSourceDirectory("src/main/licenseAssets")
 }

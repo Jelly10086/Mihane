@@ -1,0 +1,7 @@
+Outfit: https://github.com/google/fonts/tree/main/ofl/outfit
+Outfit SHA-256: fc7287273e66929776e2ba54f144fe699080bec29f61bf649d70d871468aeade
+MiSans: https://hyperos.mi.com/font/zh/download/
+Supply the original official MiSans ZIP using MISANS_ARCHIVE or -Pfonts.misansArchive=/path/MiSans.zip.
+The embedded MiSansVF.ttf must match misans.sha256. No subset or font conversion is performed.
+MiSans is separately licensed; the original font is embedded in the APK, not distributed as a standalone download.
+Font notices are packaged in assets/licenses and displayed under About - Open Source Licenses.

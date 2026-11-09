@@ -49,3 +49,6 @@ local.properties
 
 # Android release outputs (baseline profiles, metadata)
 app/release/
+
+# MiSans is supplied by the official local font archive.
+/fonts/misans/

@@ -1,9 +1,9 @@
 import org.gradle.api.Project
 
 object ProjectConfig {
-    const val APP_NAME = "Mishka"
-    const val PACKAGE_NAME = "top.yukonga.mishka"
-    const val VERSION_NAME = "1.0.0"
+    const val APP_NAME = "mihane"
+    const val PACKAGE_NAME = "rinn.rei.mihane"
+    const val VERSION_NAME = "1.3.0"
 
     object Android {
         const val TARGET_SDK = 37

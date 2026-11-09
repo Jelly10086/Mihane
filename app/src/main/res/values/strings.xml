@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Mishka</string>
+    <string name="app_name" translatable="false">mihane</string>
 
     <!-- Notification Channels -->
     <string name="channel_vpn_name">VPN Service Status</string>
-    <string name="channel_vpn_desc">Mishka proxy service status</string>
+    <string name="channel_vpn_desc">mihane proxy service status</string>
     <string name="channel_profile_status_name">Config Update Progress</string>
     <string name="channel_profile_status_desc">Config download and validation progress</string>
     <string name="channel_profile_result_name">Config Update Result</string>
@@ -15,7 +15,7 @@
 
     <!-- VPN Notifications -->
     <string name="notification_loading">Starting…</string>
-    <string name="notification_running_title">Mishka Running</string>
+    <string name="notification_running_title">mihane Running</string>
     <string name="notification_running_content">Mode: %1$s</string>
     <string name="notification_wifi_policy_title">Wi-Fi Auto Switch</string>
     <string name="notification_wifi_policy_service_content">Waiting for Wi-Fi changes</string>
@@ -59,7 +59,7 @@
     <!-- Service Errors -->
     <string name="error_vpn_failed">VPN establishment failed: %1$s</string>
     <string name="error_vpn_denied">VPN permission denied</string>
-    <string name="error_vpn_no_selected_apps">Select at least one installed app other than Mishka before starting VPN.</string>
+    <string name="error_vpn_no_selected_apps">Select at least one installed app other than mihane before starting VPN.</string>
     <string name="error_vpn_not_ready">VPN startup did not complete or its control API is unavailable</string>
     <string name="error_start_failed">Start failed</string>
     <string name="error_root_failed">Cannot obtain Root permission</string>
@@ -332,7 +332,7 @@
     <string name="settings_theme_group_color">Color &amp; Theme</string>
     <string name="settings_theme_group_interface">Interface &amp; Effects</string>
     <string name="settings_theme_group_navigation">Navigation</string>
-    <string name="settings_theme_summary">Color, blur effects and interface scale; navigation and gesture options</string>
+    <string name="settings_theme_summary">Dynamic colors, seed color, dark theme and interface scale</string>
     <string name="settings_theme_mode">Theme Mode</string>
     <string name="settings_theme_system">Follow System</string>
     <string name="settings_theme_light">Light</string>
@@ -347,7 +347,7 @@
     <string name="settings_theme_blur_style_gaussian_summary">Uniform frosted blur across the top bar</string>
     <string name="settings_theme_blur_style_progressive_summary">Gradient blur, strongest at the top edge</string>
     <string name="settings_theme_density_scale">Interface Scale</string>
-    <string name="settings_theme_density_scale_summary">Adjust the global display scale (80% - 110%)</string>
+    <string name="settings_theme_density_scale_summary" formatted="false">Adjust the global display scale (80% - 110%)</string>
     <string name="settings_theme_floating_bottom_bar">Floating Bottom Bar</string>
     <string name="settings_theme_floating_bottom_bar_summary">Use a floating bottom navigation bar on phones</string>
     <string name="settings_theme_floating_bottom_bar_style">Floating Bottom Bar Style</string>
@@ -372,8 +372,8 @@
     <string name="settings_theme_palette_content">Content (Content)</string>
     <string name="settings_theme_pure_black">Pure Black Background</string>
     <string name="settings_theme_pure_black_summary">Use a pure black background in dark mode</string>
-    <string name="settings_theme_accent_title">Accent Color</string>
-    <string name="settings_theme_accent_default">System color</string>
+    <string name="settings_theme_accent_title">Seed Color</string>
+    <string name="settings_theme_accent_default">Default</string>
     <string name="settings_theme_accent_blue">Blue</string>
     <string name="settings_theme_accent_purple">Purple</string>
     <string name="settings_theme_accent_pink">Pink</string>
@@ -634,4 +634,10 @@
         <item quantity="other">%1$d overrides selected</item>
     </plurals>
     <string name="subscription_overrides">Overrides</string>
+    <string name="about_font_resources">Fonts</string>
+    <string name="home_uptime_label">Uptime %1$s</string>
+    <string name="home_latency_testing">Testing</string>
+    <string name="home_latency_slow">Slow</string>
+    <string name="home_latency_high">High latency</string>
+    <string name="home_title" translatable="false">Mihane</string>
 </resources>

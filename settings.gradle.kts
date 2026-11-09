@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "Mishka"
+rootProject.name = "mihane"
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -32,7 +32,13 @@ dependencyResolutionManagement {
 }
 
 includeBuild("build-logic")
+
 includeBuild("scripta")
 
 include(":app")
+
 include(":baselineprofile")
+
+include(":uwuCompose")
+
+project(":uwuCompose").projectDir = file("sdk-build")

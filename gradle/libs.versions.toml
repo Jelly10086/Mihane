@@ -1,6 +1,7 @@
 [versions]
 agp = "9.4.1"
 androidx-activity = "1.13.0"
+androidx-core = "1.18.0"
 androidx-benchmark = "1.5.0"
 androidx-lifecycle = "2.11.0"
 androidx-navigationevent = "1.2.0"
@@ -18,12 +19,25 @@ kotlinx-serialization = "1.12.0"
 ksp = "2.3.9"
 ktor = "3.6.0"
 material-icons-extended = "1.7.8"
-miuix = "0.9.4"
+compose = "1.12.0-alpha01"
+material3 = "1.5.0-alpha16"
+navigation3 = "1.2.1"
+material-color-utilities = "5.0.1"
 quickie = "1.12.0"
 room3 = "3.0.3"
 sqlite = "2.7.1"
 
 [libraries]
+androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
+compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "compose" }
+compose-animation = { module = "androidx.compose.animation:animation", version.ref = "compose" }
+compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
+compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
+material-color-utilities = { module = "com.materialkolor:material-color-utilities", version.ref = "material-color-utilities" }
+
 androidx-activity = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
 androidx-benchmark-macro-junit4 = { module = "androidx.benchmark:benchmark-macro-junit4", version.ref = "androidx-benchmark" }
 androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "androidx-splashscreen" }
@@ -50,11 +64,6 @@ ktor-client-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "kto
 ktor-client-websockets = { module = "io.ktor:ktor-client-websockets", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons-extended" }
-miuix-blur = { module = "top.yukonga.miuix.kmp:miuix-blur-android", version.ref = "miuix" }
-miuix-icons = { module = "top.yukonga.miuix.kmp:miuix-icons-android", version.ref = "miuix" }
-miuix-nav = { module = "top.yukonga.miuix.kmp:miuix-nav-android", version.ref = "miuix" }
-miuix-preference = { module = "top.yukonga.miuix.kmp:miuix-preference-android", version.ref = "miuix" }
-miuix-ui = { module = "top.yukonga.miuix.kmp:miuix-ui-android", version.ref = "miuix" }
 quickie-bundled = { module = "io.github.g00fy2.quickie:quickie-bundled", version.ref = "quickie" }
 scripta-editor = { module = "scripta:editor" }
 
@@ -64,10 +73,10 @@ baselineprofile = ["androidx-benchmark-macro-junit4", "androidx-test-junit", "an
 koin = ["koin-android", "koin-core"]
 kotlinx = ["kotlinx-collections-immutable", "kotlinx-coroutines-core", "kotlinx-datetime", "kotlinx-serialization-json"]
 ktor = ["ktor-client-content-negotiation", "ktor-client-core", "ktor-client-okhttp", "ktor-client-websockets", "ktor-serialization-json"]
-miuix = ["miuix-blur", "miuix-icons", "miuix-nav", "miuix-preference", "miuix-ui"]
 room = ["androidx-room3-runtime", "androidx-sqlite-bundled"]
 
 [plugins]
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidTest = { id = "com.android.test", version.ref = "agp" }
 baselineProfile = { id = "androidx.baselineprofile", version.ref = "androidx-benchmark" }
