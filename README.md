@@ -19,7 +19,7 @@ Mihane 是基于 [Mishka](https://github.com/YuKongA/Mishka) 二次开发的 And
 2. 在“设置”中选择隧道模式。
 3. 返回首页启动代理。VPN 模式首次启动时需要确认系统连接请求，ROOT 模式需要 Root 权限。
 
-安装包见 [GitHub Actions](https://github.com/Jelly10086/Mihane/actions/workflows/build.yml) 的构建产物。
+安装包见 [Releases](https://github.com/Jelly10086/Mihane/releases)，开发构建见 [GitHub Actions](https://github.com/Jelly10086/Mihane/actions/workflows/build.yml)。
 
 ## 构建
 
@@ -44,6 +44,8 @@ bash .github/scripts/prepare-misans.sh
 PR 运行编译、lint 和四种 ABI 的产物检查。`main` 和手动构建发布使用固定签名的 Debug、Release APK，发布前核对签名证书、包名、版本和原生库架构。CI 的 `versionCode` 按工作流运行编号递增。
 
 仓库 Secrets 使用 `SIGNING_KEY`（Base64 编码的密钥库）、`KEY_STORE_PASSWORD`、`ALIAS` 和 `KEY_PASSWORD`。签名证书指纹固定在 `.github/ci/signing-certificate.sha256`。
+
+发布版本时，将 `ProjectConfig.kt` 中的 `VERSION_NAME` 更新为目标版本，再推送对应的 `v版本号` 标签；也可在 `main` 手动运行工作流并勾选 `publish_release`。构建和校验通过后，发布四种 ABI 的 Release APK 与 `SHA256SUMS`。
 
 ## 字体与许可
 
